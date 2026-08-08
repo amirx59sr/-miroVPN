@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AmiroVPN" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">#0277BD</item>
+        <item name="android:colorPrimaryDark">#01579B</item>
+        <item name="android:colorAccent">#4FC3F7</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+    </style>
+</resources>
