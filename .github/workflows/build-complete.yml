@@ -13,29 +13,30 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # ===== مرحله ۱: ساخت sing-box =====
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: '1.22'
+    # ===== مرحله ۱: دانلود sing-box آماده =====
+    - name: Create assets directory
+      run: mkdir -p app/src/main/assets
 
-    - name: Clone sing-box
-      run: git clone https://github.com/SagerNet/sing-box.git sing-box-src
-
-    - name: Build sing-box for Android arm64
+    - name: Download sing-box for arm64
       run: |
-        cd sing-box-src
-        CGO_ENABLED=0 GOOS=android GOARCH=arm64 go build -v -tags "with_clash_api with_wireguard with_grpc with_utls with_reality_server with_quic with_dhcp with_shadowsocksr" -o ../app/src/main/assets/sing-box-arm64 ./cmd/sing-box
+        curl -L -o sing-box-arm64.tar.gz https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-arm64.tar.gz
+        tar -xzf sing-box-arm64.tar.gz
+        cp sing-box*/sing-box app/src/main/assets/sing-box-arm64
+        chmod +x app/src/main/assets/sing-box-arm64
 
-    - name: Build sing-box for Android armv7
+    - name: Download sing-box for armv7
       run: |
-        cd sing-box-src
-        CGO_ENABLED=0 GOOS=android GOARCH=arm GOARM=7 go build -v -tags "with_clash_api with_wireguard with_grpc with_utls with_reality_server with_quic with_dhcp with_shadowsocksr" -o ../app/src/main/assets/sing-box-armv7 ./cmd/sing-box
+        curl -L -o sing-box-armv7.tar.gz https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-armv7.tar.gz
+        tar -xzf sing-box-armv7.tar.gz
+        cp sing-box*/sing-box app/src/main/assets/sing-box-armv7
+        chmod +x app/src/main/assets/sing-box-armv7
 
-    - name: Build sing-box for Android x86_64
+    - name: Download sing-box for x86_64
       run: |
-        cd sing-box-src
-        CGO_ENABLED=0 GOOS=android GOARCH=amd64 go build -v -tags "with_clash_api with_wireguard with_grpc with_utls with_reality_server with_quic with_dhcp with_shadowsocksr" -o ../app/src/main/assets/sing-box-x86_64 ./cmd/sing-box
+        curl -L -o sing-box-x86_64.tar.gz https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64.tar.gz
+        tar -xzf sing-box-x86_64.tar.gz
+        cp sing-box*/sing-box app/src/main/assets/sing-box-x86_64
+        chmod +x app/src/main/assets/sing-box-x86_64
 
     # ===== مرحله ۲: ساخت APK =====
     - name: Set up JDK 17
