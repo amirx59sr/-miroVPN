@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- تم مشکی (OLED-friendly) -->
+    <color name="black_background">#000000</color>
+    <color name="black_surface">#0A0A0A</color>
+    <color name="black_surface_variant">#1A1A1A</color>
+    
+    <!-- تم سفید -->
+    <color name="white_background">#FAFAFA</color>
+    <color name="white_surface">#FFFFFF</color>
+    <color name="white_surface_variant">#F0F0F0</color>
+    
+    <!-- رنگ‌های اصلی -->
+    <color name="primary">#0277BD</color>
+    <color name="primary_light">#4FC3F7</color>
+    <color name="primary_dark">#01579B</color>
+    <color name="secondary">#039BE5</color>
+    
+    <!-- رنگ‌های متن -->
+    <color name="text_on_dark">#FFFFFF</color>
+    <color name="text_on_light">#000000</color>
+</resources>
