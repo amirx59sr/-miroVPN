@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- سپر محافظ -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,24L30,34v16c0,14.4 10.2,27.9 24,32c13.8,-4.1 24,-17.6 24,-32V34L54,24z" />
+    
+    <!-- علامت تیک داخل سپر -->
+    <path
+        android:fillColor="#0277BD"
+        android:pathData="M46,54l6,6l12,-12l-3,-3l-9,9l-3,-3z" />
+</vector>
