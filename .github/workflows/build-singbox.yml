@@ -1,0 +1,41 @@
+name: Build sing-box Core
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'core-version.txt'
+
+jobs:
+  build-singbox:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+
+    - name: Clone sing-box repository
+      run: |
+        git clone https://github.com/SagerNet/sing-box.git
+        cd sing-box
+        git checkout main
+
+    - name: Build sing-box for Android
+      run: |
+        cd sing-box
+        go build -v -o sing-box-android-arm64 -tags "with_clash_api with_wireguard with_grpc with_utls with_reality_server with_quic with_dhcp with_oidc with_shadowsocksr" ./cmd/sing-box
+      env:
+        GOOS: android
+        GOARCH: arm64
+        CGO_ENABLED: 0
+
+    - name: Upload sing-box binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: sing-box-android
+        path: sing-box/sing-box-android-arm64
