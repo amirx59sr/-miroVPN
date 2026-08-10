@@ -1,0 +1,37 @@
+name: Download Pre-built Cores
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create jniLibs directories
+      run: |
+        mkdir -p app/src/main/jniLibs/arm64-v8a
+        mkdir -p app/src/main/jniLibs/armeabi-v7a
+        mkdir -p app/src/main/jniLibs/x86_64
+
+    # دانلود از v2rayNG (فایل‌های آماده sing-box)
+    - name: Download sing-box from v2rayNG releases
+      run: |
+        curl -L -o v2rayng.apk https://github.com/2dust/v2rayNG/releases/latest/download/v2rayNG_1.8.18_universal.apk
+        unzip v2rayng.apk -d v2rayng_extracted
+        
+        # کپی فایل‌های .so
+        cp v2rayng_extracted/lib/arm64-v8a/libtun2socks.so app/src/main/jniLibs/arm64-v8a/ || true
+        cp v2rayng_extracted/lib/armeabi-v7a/libtun2socks.so app/src/main/jniLibs/armeabi-v7a/ || true
+        cp v2rayng_extracted/lib/x86_64/libtun2socks.so app/src/main/jniLibs/x86_64/ || true
+
+    - name: Commit core files
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add app/src/main/jniLibs/
+        git commit -m "Add pre-built sing-box core files" || echo "No changes to commit"
+        git push
