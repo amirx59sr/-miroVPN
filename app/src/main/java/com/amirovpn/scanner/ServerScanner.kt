@@ -71,7 +71,8 @@ class ServerScanner {
                         } finally {
                             completed++
                             onProgress(completed, configs.size)
-                            delay(DELAY_BETWEEN_TESTS) // جلوگیری از داغ شدن
+                            // ✅ اصلاح شده: اضافه کردن .toLong()
+                            delay(DELAY_BETWEEN_TESTS.toLong()) 
                         }
                     }
                 }
@@ -160,7 +161,6 @@ class ServerScanner {
                 connection.disconnect()
                 
                 // اگر کد پاسخ ۲۰۰، ۳۰۱، ۳۰۲ یا ۴۰۴ باشه، یعنی سرور در دسترسه
-                // (۴۰۴ هم یعنی اتصال برقرار شده)
                 responseCode in listOf(200, 301, 302, 404, 405)
                 
             } catch (e: Exception) {
@@ -176,7 +176,6 @@ class ServerScanner {
         var score = 0.0
         
         // امتیاز پینگ (حداکثر ۴۰ امتیاز)
-        // هرچه پینگ کمتر، امتیاز بیشتر
         val pingScore = when {
             pingMs < 100 -> 40.0
             pingMs < 200 -> 30.0
